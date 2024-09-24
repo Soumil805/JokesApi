@@ -8,25 +8,16 @@ const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // To handle JSON requests
 
-let jokes = [
-  {
-    id: 1,
-    jokeText: "Why don't scientists trust atoms? Because they make up everything.",
-    jokeType: "Science",
-  },
-  // ... (other jokes)
-];
-
 // 1. GET a random joke
 app.get("/random", (req, res) => {
-  const randomjoke = Math.floor(Math.random() * jokes.length);
-  res.json(jokes[randomjoke]);
+  const randomIndex = Math.floor(Math.random() * jokes.length);
+  res.json(jokes[randomIndex]);
 });
 
 // 2. GET a specific joke
 app.get("/jokes/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const joke = jokes.find((joke) => joke.id === id);
+  const joke = jokes.find((j) => j.id === id);
   if (joke) {
     res.json(joke);
   } else {
@@ -45,12 +36,13 @@ app.get("/filter", (req, res) => {
   }
 });
 
-// 4. POST a new joke
+// 4. POST a new joke with setup and delivery
 app.post("/jokes", (req, res) => {
   const newJoke = {
     id: jokes.length + 1,
     jokeType: req.body.type,
-    jokeText: req.body.text,
+    setup: req.body.setup,
+    delivery: req.body.delivery,
   };
   jokes.push(newJoke);
   res.status(201).json(newJoke);
@@ -65,7 +57,8 @@ app.put("/jokes/:id", (req, res) => {
     const replacementJoke = {
       id,
       jokeType: req.body.type,
-      jokeText: req.body.text,
+      setup: req.body.setup,
+      delivery: req.body.delivery,
     };
     jokes[searchIndex] = replacementJoke;
     res.json(replacementJoke);
@@ -83,7 +76,8 @@ app.patch("/jokes/:id", (req, res) => {
     const updatedJoke = {
       id: existingJoke.id,
       jokeType: req.body.type || existingJoke.jokeType,
-      jokeText: req.body.text || existingJoke.jokeText,
+      setup: req.body.setup || existingJoke.setup,
+      delivery: req.body.delivery || existingJoke.delivery,
     };
     const searchIndex = jokes.findIndex((joke) => joke.id === id);
     jokes[searchIndex] = updatedJoke;
@@ -119,3 +113,130 @@ app.delete("/all", (req, res) => {
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
 });
+
+app.listen(port, () => {
+  console.log(`Successfully started server on port ${port}.`);
+});
+
+var jokes = [
+  {
+    id: 1,
+    setup: "Why don't scientists trust atoms?",
+    delivery: "Because they make up everything.",
+    jokeType: "Science",
+  },
+  {
+    id: 2,
+    setup: "Why did the scarecrow win an award?",
+    delivery: "Because he was outstanding in his field.",
+    jokeType: "Puns",
+  },
+  {
+    id: 3,
+    setup: "I told my wife she was drawing her eyebrows too high.",
+    delivery: "She looked surprised.",
+    jokeType: "Puns",
+  },
+  {
+    id: 4,
+    setup: "What did one ocean say to the other ocean?",
+    delivery: "Nothing, they just waved.",
+    jokeType: "Wordplay",
+  },
+  {
+    id: 5,
+    setup: "Why do we never tell secrets on a farm?",
+    delivery: "Because the potatoes have eyes and the corn has ears.",
+    jokeType: "Wordplay",
+  },
+  {
+    id: 6,
+    setup: "How do you organize a space party?",
+    delivery: "You planet!",
+    jokeType: "Science",
+  },
+  {
+    id: 7,
+    setup: "Why don't some couples go to the gym?",
+    delivery: "Because some relationships don't work out.",
+    jokeType: "Puns",
+  },
+  {
+    id: 8,
+    setup: "Parallel lines have so much in common.",
+    delivery: "It's a shame they'll never meet.",
+    jokeType: "Math",
+  },
+  {
+    id: 9,
+    setup: "What do you call fake spaghetti?",
+    delivery: "An impasta!",
+    jokeType: "Food",
+  },
+  {
+    id: 10,
+    setup: "Why did the tomato turn red?",
+    delivery: "Because it saw the salad dressing!",
+    jokeType: "Food",
+  },
+  {
+    id: 11,
+    setup: "What do you get when you cross a snowman and a vampire?",
+    delivery: "Frostbite!",
+    jokeType: "Wordplay",
+  },
+  {
+    id: 12,
+    setup: "Why did the golfer bring two pairs of pants?",
+    delivery: "In case he got a hole in one!",
+    jokeType: "Sports",
+  },
+  {
+    id: 13,
+    setup: "Why are ghosts bad at lying?",
+    delivery: "Because you can see right through them!",
+    jokeType: "Wordplay",
+  },
+  {
+    id: 14,
+    setup: "Why can't you give Elsa a balloon?",
+    delivery: "Because she will let it go.",
+    jokeType: "Movies",
+  },
+  {
+    id: 15,
+    setup: "I'm reading a book about anti-gravity.",
+    delivery: "It's impossible to put down!",
+    jokeType: "Science",
+  },
+  {
+    id: 16,
+    setup: "Why did the coffee file a police report?",
+    delivery: "It got mugged.",
+    jokeType: "Food",
+  },
+  {
+    id: 17,
+    setup: "What did one ocean say to the other?",
+    delivery: "Nothing, they just waved.",
+    jokeType: "Wordplay",
+  },
+  {
+    id: 18,
+    setup: "Why did the stadium get hot after the game?",
+    delivery: "All the fans left.",
+    jokeType: "Sports",
+  },
+  {
+    id: 19,
+    setup: "Why don’t eggs tell jokes?",
+    delivery: "Because they’d crack each other up.",
+    jokeType: "Food",
+  },
+  {
+    id: 20,
+    setup: "Why was the math book sad?",
+    delivery: "It had too many problems.",
+    jokeType: "Math",
+  }
+];
