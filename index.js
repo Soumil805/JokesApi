@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -111,11 +111,7 @@ app.delete("/all", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Successfully started server on port ${port}.`);
-});
-
-app.listen(port, () => {
-  console.log(`Successfully started server on port ${port}.`);
+  console.log(`Server started on port ${port}`);
 });
 
 var jokes = [
